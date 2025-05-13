@@ -19,6 +19,14 @@ print(calculate_age())
 
 # 2.
 
+txt = 'LMaasleitbtui'
+
+print(txt[0::2], txt[1::2], sep='\n')
+
+
+# 3.
+
+
 
                                 
   
