@@ -108,4 +108,30 @@ print(domain_extract("timaxrus@gmail.com"))
 
 # 10.
 
+import random                                                  # importing random library to work with random selection of letters, digits and special characters
+import string                                                  # importing string library to get the list of lower and upper letters, digits and special characters
 
+def generate_password(length=12):                              # default length of the password is 12, user can also specify the length of the password. It should be at least 8 characters length
+    if length < 8:
+        raise ValueError("Password length should be at least 8 characters for security reasons.")          # raise error message in case the user gives less amount than expected
+    
+    lowercase_letters = string.ascii_lowercase                 # assigning all the lowercase letters to the varaible
+    uppercase_letters = string.ascii_uppercase                 # assigning all the uppercase letters to the varaible
+    digits = string.digits                                     # assigning all the digits to the varaible
+    special_characters = string.punctuation                    # assigning special characters to the varaible
+    
+    all_characters = lowercase_letters + uppercase_letters + digits + special_characters               # assigning all the characters to the varaible
+    
+    password = [                                                                                       # password variable contains at least one of the four types of character in list datatype
+        random.choice(lowercase_letters),
+        random.choice(uppercase_letters),
+        random.choice(digits),
+        random.choice(special_characters)
+    ]
+    
+    password += random.choices(all_characters, k=length - 4)                                          # appending the random length - 4 character to password list
+    random.shuffle(password)                                                                          # shuffles the password variable in place
+    
+    return ''.join(password)                                                                          # joining the list values together without a space in between, changing the datatype to string
+
+print(generate_password())
