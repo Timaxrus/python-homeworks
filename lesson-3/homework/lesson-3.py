@@ -77,6 +77,54 @@ print(f"The color '{color}' appears in the list {count} times.")            # us
 
 # 10.
 
+animals = ("tiger", "elephant", "eagle", "giraffe", "bear", "lion")
+
+print(animals.index("lion"))                                  # "index" method returns the index of the elemen taken as argument
+
+# 11.
+
+num1 = (1, 4, 8)
+
+num2 = (3, 6, 4)
+
+num1 += num2                                                # merging the two tuples using + operator
+
+print(num1)
+
+# 12.
+
+num1_t = (1, 4, 8)
+
+num2_l = [3, 6, 4]
+
+print(len(num1_t))                                        # len function is used to count the length of both tuple and list
+print(len(num2_l))
+
+# 13.
+
+num1 = (1, 4, 8, 3, 5)
+
+num2 = list(num1)
+
+print(type(num2))
+
+# 14.
+
+num1 = (1, 4, 8, 3, 5)
+
+max = max(num1)
+
+min = min(num1)
+
+print(f"The maximum is {max} and the minimum is {min}.")
+
+# 15. 
+
+num1 = ("good", "ok", "bad")
+
+num2 = tuple(reversed(num1))
+
+print(num2)
 
 
 
