@@ -1,12 +1,6 @@
-Learning is good. 
+Learning is good.
 I love python.
 I love SQL.
-I love Data Analytics.I need to learn Power BI as well.This is a new line of text.
-This is a new line of text.
-This is a new line of text.
-This is a new line of text.
-This is a new line of text.
-This is a new line of text.
-This is a new line of text.
-This is a new line of text.
-This is a new line of text.
+I love Data Analytics.
+I need to learn Power BI as well.
+Something needs changing.
