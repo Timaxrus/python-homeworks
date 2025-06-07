@@ -45,20 +45,16 @@ class Person:
         
     # Defining a method that calculates the area of the circle
     def age(self):
-        return math.pi * self.radius ** 2     # Area = π × r2
+        return datetime.year() - self.DOB    # Current year - year of birth
         
-    # Defining a method that calculates the perimeter af the circle
-    def perimeter(self):
-        return 2 * math.pi * self.radius      # Perimeter = 2×π × r
         
 # Example usage
 if __name__ == "__main__":
     try:
         # Create a Circle object with radius 5
-        circle = Circle(5)
+        person = Person("John", "USA", "1981-01-01")
 
         # Calculate and display the area and perimeter
-        print(f"Area: {circle.area():.2f}")
-        print(f"Perimeter: {circle.perimeter():.2f}")
+        print(person())
     except ValueError as e:
         print(e)
