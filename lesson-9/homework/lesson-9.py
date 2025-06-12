@@ -747,3 +747,125 @@ if __name__ == "__main__":
 
 # 11.
 
+from typing import Dict, List, Optional
+import uuid
+from datetime import datetime
+
+class BankAccount:
+    """Represents a customer's bank account with transaction history."""
+    
+    def __init__(self, customer_name: str, initial_balance: float = 0.0):
+        self.account_id = str(uuid.uuid4())[:8]  # Unique 8-digit ID
+        self.customer_name = customer_name
+        self.balance = initial_balance
+        self.transactions: List[Dict[str, any]] = []
+        self._record_transaction("Account Created", initial_balance)
+
+    def _record_transaction(self, description: str, amount: float) -> None:
+        """Private method to record transactions."""
+        self.transactions.append({
+            "date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "description": description,
+            "amount": amount,
+            "balance": self.balance
+        })
+
+    def deposit(self, amount: float) -> None:
+        """Deposit money into the account."""
+        if amount <= 0:
+            raise ValueError("Deposit amount must be positive")
+        self.balance += amount
+        self._record_transaction("Deposit", amount)
+        print(f"✓ Deposited ${amount:.2f}. New balance: ${self.balance:.2f}")
+
+    def withdraw(self, amount: float) -> None:
+        """Withdraw money from the account."""
+        if amount <= 0:
+            raise ValueError("Withdrawal amount must be positive")
+        if self.balance < amount:
+            raise ValueError("Insufficient funds")
+        self.balance -= amount
+        self._record_transaction("Withdrawal", -amount)
+        print(f"✓ Withdrew ${amount:.2f}. New balance: ${self.balance:.2f}")
+
+    def get_transaction_history(self) -> List[Dict[str, any]]:
+        """Return the transaction history."""
+        return self.transactions
+
+    def __str__(self) -> str:
+        return f"Account {self.account_id} ({self.customer_name}): Balance ${self.balance:.2f}"
+
+
+class Bank:
+    """Represents a bank with customer account management."""
+    
+    def __init__(self, name: str):
+        self.name = name
+        self.accounts: Dict[str, BankAccount] = {}  # account_id → BankAccount
+
+    def create_account(self, customer_name: str, initial_deposit: float = 0.0) -> BankAccount:
+        """Create a new bank account."""
+        new_account = BankAccount(customer_name, initial_deposit)
+        self.accounts[new_account.account_id] = new_account
+        print(f"✓ Created account {new_account.account_id} for {customer_name}")
+        return new_account
+
+    def get_account(self, account_id: str) -> Optional[BankAccount]:
+        """Retrieve an account by ID."""
+        return self.accounts.get(account_id)
+
+    def transfer(self, from_account_id: str, to_account_id: str, amount: float) -> None:
+        """Transfer money between accounts."""
+        from_account = self.accounts.get(from_account_id)
+        to_account = self.accounts.get(to_account_id)
+        
+        if not from_account or not to_account:
+            raise ValueError("One or both accounts not found")
+        
+        if from_account.balance < amount:
+            raise ValueError("Insufficient funds for transfer")
+        
+        from_account.withdraw(amount)
+        to_account.deposit(amount)
+        print(f"✓ Transferred ${amount:.2f} from {from_account_id} to {to_account_id}")
+
+    def generate_bank_statement(self, account_id: str) -> str:
+        """Generate a formatted bank statement."""
+        account = self.accounts.get(account_id)
+        if not account:
+            return "Account not found"
+        
+        statement = [
+            f"\n{' BANK STATEMENT '.center(50, '=')}",
+            f"Bank: {self.name}",
+            f"Account: {account_id}",
+            f"Customer: {account.customer_name}",
+            f"Current Balance: ${account.balance:.2f}",
+            "\nTRANSACTION HISTORY:",
+            f"{'Date':<20} {'Description':<15} {'Amount':>10} {'Balance':>10}"
+        ]
+        
+        for tx in account.transactions:
+            statement.append(
+                f"{tx['date']:<20} {tx['description']:<15} {tx['amount']:>10.2f} {tx['balance']:>10.2f}"
+            )
+        
+        return "\n".join(statement)
+
+
+# **Demo Usage**
+if __name__ == "__main__":
+    # Initialize the bank
+    my_bank = Bank("Python Trust Bank")
+
+    # Create accounts
+    alice = my_bank.create_account("Alice Smith", 1000.0)
+    bob = my_bank.create_account("Bob Johnson", 500.0)
+
+    # Perform transactions
+    alice.deposit(200.0)
+    bob.withdraw(100.0)
+    my_bank.transfer(alice.account_id, bob.account_id, 300.0)
+
+    # Generate a statement
+    print(my_bank.generate_bank_statement(alice.account_id))
