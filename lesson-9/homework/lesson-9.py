@@ -441,3 +441,434 @@ if __name__ == "__main__":
     print(f"Final stack: {stack}")
 
 
+<<<<<<< HEAD
+=======
+# 7.
+
+class Node:
+    """Node class represents a single node in the linked list"""
+    def __init__(self, data):
+        self.data = data  # Data stored in the node
+        self.next = None  # Reference to next node (initially None)
+
+class LinkedList:
+    """Linked list implementation with core operations"""
+    
+    def __init__(self):
+        self.head = None  # Head pointer (empty list initially)
+    
+    def display(self):
+        """Display the complete linked list"""
+        current = self.head
+        elements = []
+        while current:
+            elements.append(str(current.data))
+            current = current.next
+        print(" -> ".join(elements) if elements else "Empty list")
+    
+    def insert_at_start(self, data):
+        """Insert a new node at the beginning of the list"""
+        new_node = Node(data)
+        new_node.next = self.head
+        self.head = new_node
+    
+    def insert_at_end(self, data):
+        """Insert a new node at the end of the list"""
+        new_node = Node(data)
+        
+        if not self.head:  # If list is empty
+            self.head = new_node
+            return
+        
+        current = self.head
+        while current.next:  # Traverse to last node
+            current = current.next
+        current.next = new_node
+    
+    def insert_after(self, target_data, new_data):
+        """Insert a new node after a node with specific data"""
+        current = self.head
+        while current:
+            if current.data == target_data:
+                new_node = Node(new_data)
+                new_node.next = current.next
+                current.next = new_node
+                return
+            current = current.next
+        print(f"Error: Target data {target_data} not found")
+    
+    def delete_node(self, data):
+        """Delete the first occurrence of a node with specific data"""
+        if not self.head:
+            print("Error: List is empty")
+            return
+        
+        if self.head.data == data:  # If head needs to be deleted
+            self.head = self.head.next
+            return
+        
+        current = self.head
+        while current.next:
+            if current.next.data == data:
+                current.next = current.next.next
+                return
+            current = current.next
+        print(f"Error: Data {data} not found in list")
+    
+    def length(self):
+        """Return the number of nodes in the list"""
+        count = 0
+        current = self.head
+        while current:
+            count += 1
+            current = current.next
+        return count
+
+# Demonstration
+if __name__ == "__main__":
+    ll = LinkedList()
+    
+    print("Initial list:")
+    ll.display()  # Empty list
+    
+    print("\nInserting elements:")
+    ll.insert_at_end(10)
+    ll.insert_at_start(5)
+    ll.insert_at_end(20)
+    ll.insert_after(10, 15)
+    ll.display()  # 5 -> 10 -> 15 -> 20
+    
+    print("\nDeleting elements:")
+    ll.delete_node(15)
+    ll.display()  # 5 -> 10 -> 20
+    
+    print("\nAttempt invalid operations:")
+    ll.delete_node(100)  # Error message
+    ll.insert_after(99, 100)  # Error message
+    
+    print("\nFinal list length:", ll.length())  # 3
+
+# 8.
+
+
+class ShoppingCart:
+    def __init__(self):
+        self.items = {}  # Dictionary to store items and their quantities
+    
+    def add_item(self, item_name, price, quantity=1):
+        """Add an item to the cart or update its quantity if already present"""
+        if item_name in self.items:
+            self.items[item_name]['quantity'] += quantity
+        else:
+            self.items[item_name] = {'price': price, 'quantity': quantity}
+    
+    def remove_item(self, item_name, quantity=1):
+        """Remove an item from the cart or reduce its quantity"""
+        if item_name not in self.items:
+            print(f"Item '{item_name}' not found in cart.")
+            return
+        
+        if self.items[item_name]['quantity'] <= quantity:
+            del self.items[item_name]
+        else:
+            self.items[item_name]['quantity'] -= quantity
+    
+    def calculate_total(self):
+        """Calculate the total price of all items in the cart"""
+        return sum(item['price'] * item['quantity'] for item in self.items.values())
+    
+    def display_cart(self):
+        """Display all items in the cart with their details"""
+        if not self.items:
+            print("Your shopping cart is empty.")
+            return
+        
+        print("\nShopping Cart:")
+        print("-" * 30)
+        for item_name, details in self.items.items():
+            print(f"{item_name}: {details['quantity']} x ${details['price']:.2f} = ${details['price'] * details['quantity']:.2f}")
+        print("-" * 30)
+        print(f"TOTAL: ${self.calculate_total():.2f}\n")
+
+# Demonstration
+if __name__ == "__main__":
+    cart = ShoppingCart()
+    
+    # Add items to cart
+    cart.add_item("Apple", 0.99, 3)
+    cart.add_item("Banana", 0.59, 5)
+    cart.add_item("Milk", 3.49)
+    cart.add_item("Bread", 2.99)
+    
+    # Display initial cart
+    cart.display_cart()
+    
+    # Remove some items
+    cart.remove_item("Banana", 2)
+    cart.remove_item("Milk")
+    
+    # Try to remove non-existent item
+    cart.remove_item("Eggs")
+    
+    # Display updated cart
+    cart.display_cart()
+
+
+# 9.
+
+class Stack:
+    def __init__(self):
+        self.items = []  # Using a list to store stack elements
+    
+    def is_empty(self):
+        """Check if the stack is empty"""
+        return len(self.items) == 0
+    
+    def push(self, item):
+        """Push an element onto the stack"""
+        self.items.append(item)
+        print(f"Pushed: {item}")
+    
+    def pop(self):
+        """Pop an element from the stack"""
+        if self.is_empty():
+            print("Stack Underflow - Cannot pop from empty stack")
+            return None
+        item = self.items.pop()
+        print(f"Popped: {item}")
+        return item
+    
+    def peek(self):
+        """Return the top element without removing it"""
+        if self.is_empty():
+            print("Stack is empty")
+            return None
+        return self.items[-1]
+    
+    def display(self):
+        """Display all elements in the stack (top to bottom)"""
+        if self.is_empty():
+            print("Stack is empty")
+            return
+        
+        print("\nStack Contents (Top to Bottom):")
+        print("-----")
+        for item in reversed(self.items):
+            print(f"| {item} |")
+            print("-----")
+    
+    def size(self):
+        """Return the number of elements in the stack"""
+        return len(self.items)
+
+# Demonstration
+if __name__ == "__main__":
+    stack = Stack()
+    
+    print("Stack Operations:")
+    stack.push(10)
+    stack.push(20)
+    stack.push(30)
+    
+    stack.display()
+    
+    print("\nTop element:", stack.peek())
+    print("Stack size:", stack.size())
+    
+    stack.pop()
+    stack.pop()
+    stack.display()
+    
+    stack.pop()
+    stack.pop()  # Attempt to pop from empty stack
+
+# 10.
+
+class Queue:
+    def __init__(self):
+        self.items = []  # Using a list to store queue elements
+    
+    def is_empty(self):
+        """Check if the queue is empty"""
+        return len(self.items) == 0
+    
+    def enqueue(self, item):
+        """Add an element to the end of the queue"""
+        self.items.append(item)
+        print(f"Enqueued: {item}")
+    
+    def dequeue(self):
+        """Remove and return the element from the front of the queue"""
+        if self.is_empty():
+            print("Queue Underflow - Cannot dequeue from empty queue")
+            return None
+        item = self.items.pop(0)
+        print(f"Dequeued: {item}")
+        return item
+    
+    def front(self):
+        """Return the front element without removing it"""
+        if self.is_empty():
+            print("Queue is empty")
+            return None
+        return self.items[0]
+    
+    def display(self):
+        """Display all elements in the queue (front to rear)"""
+        if self.is_empty():
+            print("Queue is empty")
+            return
+        
+        print("\nQueue Contents (Front → Rear):")
+        print(" ← ".join(map(str, self.items)))
+    
+    def size(self):
+        """Return the number of elements in the queue"""
+        return len(self.items)
+
+# Demonstration
+if __name__ == "__main__":
+    q = Queue()
+    
+    print("Queue Operations:")
+    q.enqueue(10)
+    q.enqueue(20)
+    q.enqueue(30)
+    
+    q.display()
+    
+    print("\nFront element:", q.front())
+    print("Queue size:", q.size())
+    
+    q.dequeue()
+    q.dequeue()
+    q.display()
+    
+    q.dequeue()
+    q.dequeue()  # Attempt to dequeue from empty queue
+
+# 11.
+
+from typing import Dict, List, Optional
+import uuid
+from datetime import datetime
+
+class BankAccount:
+    """Represents a customer's bank account with transaction history."""
+    
+    def __init__(self, customer_name: str, initial_balance: float = 0.0):
+        self.account_id = str(uuid.uuid4())[:8]  # Unique 8-digit ID
+        self.customer_name = customer_name
+        self.balance = initial_balance
+        self.transactions: List[Dict[str, any]] = []
+        self._record_transaction("Account Created", initial_balance)
+
+    def _record_transaction(self, description: str, amount: float) -> None:
+        """Private method to record transactions."""
+        self.transactions.append({
+            "date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "description": description,
+            "amount": amount,
+            "balance": self.balance
+        })
+
+    def deposit(self, amount: float) -> None:
+        """Deposit money into the account."""
+        if amount <= 0:
+            raise ValueError("Deposit amount must be positive")
+        self.balance += amount
+        self._record_transaction("Deposit", amount)
+        print(f"✓ Deposited ${amount:.2f}. New balance: ${self.balance:.2f}")
+
+    def withdraw(self, amount: float) -> None:
+        """Withdraw money from the account."""
+        if amount <= 0:
+            raise ValueError("Withdrawal amount must be positive")
+        if self.balance < amount:
+            raise ValueError("Insufficient funds")
+        self.balance -= amount
+        self._record_transaction("Withdrawal", -amount)
+        print(f"✓ Withdrew ${amount:.2f}. New balance: ${self.balance:.2f}")
+
+    def get_transaction_history(self) -> List[Dict[str, any]]:
+        """Return the transaction history."""
+        return self.transactions
+
+    def __str__(self) -> str:
+        return f"Account {self.account_id} ({self.customer_name}): Balance ${self.balance:.2f}"
+
+
+class Bank:
+    """Represents a bank with customer account management."""
+    
+    def __init__(self, name: str):
+        self.name = name
+        self.accounts: Dict[str, BankAccount] = {}  # account_id → BankAccount
+
+    def create_account(self, customer_name: str, initial_deposit: float = 0.0) -> BankAccount:
+        """Create a new bank account."""
+        new_account = BankAccount(customer_name, initial_deposit)
+        self.accounts[new_account.account_id] = new_account
+        print(f"✓ Created account {new_account.account_id} for {customer_name}")
+        return new_account
+
+    def get_account(self, account_id: str) -> Optional[BankAccount]:
+        """Retrieve an account by ID."""
+        return self.accounts.get(account_id)
+
+    def transfer(self, from_account_id: str, to_account_id: str, amount: float) -> None:
+        """Transfer money between accounts."""
+        from_account = self.accounts.get(from_account_id)
+        to_account = self.accounts.get(to_account_id)
+        
+        if not from_account or not to_account:
+            raise ValueError("One or both accounts not found")
+        
+        if from_account.balance < amount:
+            raise ValueError("Insufficient funds for transfer")
+        
+        from_account.withdraw(amount)
+        to_account.deposit(amount)
+        print(f"✓ Transferred ${amount:.2f} from {from_account_id} to {to_account_id}")
+
+    def generate_bank_statement(self, account_id: str) -> str:
+        """Generate a formatted bank statement."""
+        account = self.accounts.get(account_id)
+        if not account:
+            return "Account not found"
+        
+        statement = [
+            f"\n{' BANK STATEMENT '.center(50, '=')}",
+            f"Bank: {self.name}",
+            f"Account: {account_id}",
+            f"Customer: {account.customer_name}",
+            f"Current Balance: ${account.balance:.2f}",
+            "\nTRANSACTION HISTORY:",
+            f"{'Date':<20} {'Description':<15} {'Amount':>10} {'Balance':>10}"
+        ]
+        
+        for tx in account.transactions:
+            statement.append(
+                f"{tx['date']:<20} {tx['description']:<15} {tx['amount']:>10.2f} {tx['balance']:>10.2f}"
+            )
+        
+        return "\n".join(statement)
+
+
+# **Demo Usage**
+if __name__ == "__main__":
+    # Initialize the bank
+    my_bank = Bank("Python Trust Bank")
+
+    # Create accounts
+    alice = my_bank.create_account("Alice Smith", 1000.0)
+    bob = my_bank.create_account("Bob Johnson", 500.0)
+
+    # Perform transactions
+    alice.deposit(200.0)
+    bob.withdraw(100.0)
+    my_bank.transfer(alice.account_id, bob.account_id, 300.0)
+
+    # Generate a statement
+    print(my_bank.generate_bank_statement(alice.account_id))
+>>>>>>> 351a0a0b70f0a3f2b116877b6fd71746b32b663e
