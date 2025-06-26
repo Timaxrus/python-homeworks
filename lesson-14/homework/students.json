@@ -1,0 +1,57 @@
+[
+{
+    "id": 1001,
+    "name": "Emily Chen",
+    "age": 20,
+    "email": "emily.chen@university.edu",
+    "major": "Computer Science",
+    "gpa": 3.8,
+    "courses": ["Data Structures", "Algorithms", "Database Systems"],
+    "is_international": false,
+    "enrollment_date": "2022-09-01"
+},
+{
+    "id": 1002,
+    "name": "James Rodriguez",
+    "age": 22,
+    "email": "j.rodriguez@university.edu",
+    "major": "Electrical Engineering",
+    "gpa": 3.5,
+    "courses": ["Circuit Theory", "Digital Systems", "Signals Processing"],
+    "is_international": true,
+    "enrollment_date": "2021-09-01"
+},
+{
+    "id": 1003,
+    "name": "Sophia Patel",
+    "age": 21,
+    "email": "sophia.p@university.edu",
+    "major": "Biology",
+    "gpa": 3.9,
+    "courses": ["Genetics", "Organic Chemistry", "Cell Biology"],
+    "is_international": false,
+    "enrollment_date": "2022-01-15"
+},
+{
+    "id": 1004,
+    "name": "Liam Johnson",
+    "age": 23,
+    "email": "liam.j@university.edu",
+    "major": "Business Administration",
+    "gpa": 3.2,
+    "courses": ["Marketing", "Financial Accounting", "Business Law"],
+    "is_international": false,
+    "enrollment_date": "2020-09-01"
+},
+{
+    "id": 1005,
+    "name": "Aisha Khan",
+    "age": 19,
+    "email": "a.khan@university.edu",
+    "major": "Psychology",
+    "gpa": 3.7,
+    "courses": ["Cognitive Psychology", "Research Methods", "Abnormal Psychology"],
+    "is_international": true,
+    "enrollment_date": "2023-01-10"
+}
+]
